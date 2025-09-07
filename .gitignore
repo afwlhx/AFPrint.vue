@@ -1,0 +1,8 @@
+# 普通目录
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+
+.DS_Store
