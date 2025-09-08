@@ -41,8 +41,10 @@ async function Order() {
 </script>
 
 <template>
-  下单手机：<el-input type="text" v-model="phoneNumber"/>
-  <el-button @click="Order()" class="order_button">下单</el-button>
+  下单手机：<t-input type="text" v-model="phoneNumber"/>
+  <t-button @click="Order()" class="order_button">下单</t-button>
+
+  <template><t-alert message="这是一条信息" closeBtn /></template>
 </template>
 
 <style scoped>

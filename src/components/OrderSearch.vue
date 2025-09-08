@@ -24,25 +24,37 @@ function GetOrder() {
 
 // 表格响应式数据
 let tableData = ref([]);
+
+
+
+
+const columns = ref([
+  { colKey: 'id', title: 'ID', width: '100' },
+  { colKey: 'orderId', title: '订单编号' },
+  { colKey: 'orderStatus', title: '订单状态' },
+  { colKey: 'phoneNumber', title: '电话号码'},
+  { colKey: 'isPay', title: '是否付款' },
+  { colKey: 'cost', title: '花费' },
+  { colKey: 'orderTime', title: '下单时间' },
+  { colKey: 'fileName', title: '文件名' },
+]);
 </script>
 
 <template>
 <h2>订单查询(手机号)</h2>
-  <el-input v-model="phoneNumber"/>
-  <el-button @click="GetOrder">查询</el-button>
+  <t-input v-model="phoneNumber"/>
+  <t-button @click="GetOrder">查询</t-button>
 
-  <el-table :data="tableData" style="width: 100%">
-    <el-table-column prop="id" label="Id" width="40"/>
-    <el-table-column prop="orderId" label="订单Id" width="250"/>
-    <el-table-column prop="orderStatus" label="订单状态" width="80"/>
-    <el-table-column prop="phoneNumber" label="电话号码" width="120"/>
-    <el-table-column prop="isPay" label="是否付费" width="80"/>
-    <el-table-column prop="cost" label="花费(¥)" width="80"/>
-    <el-table-column prop="orderTime" label="下单时间" width="180"/>
-    <el-table-column prop="fileName" label="文件名" />
-  </el-table>
-
-
+  <t-table
+      bordered
+      size="small"
+      hover
+      stripe
+      row-key="index"
+      :data="tableData"
+      :columns="columns"
+  >
+  </t-table>
 </template>
 
 <style scoped>
