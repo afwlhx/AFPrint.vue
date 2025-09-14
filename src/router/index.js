@@ -12,6 +12,10 @@ const routes = [
     {
         path: '/admin',
         component:()=>import('@/views/Admin.vue')
+    },
+    {
+        path: '/cost-table',
+        component:()=>import('@/views/CostTable.vue'),
     }
 ]
 

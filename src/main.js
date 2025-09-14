@@ -12,8 +12,12 @@ import router from '@/router'
 import TDesign from 'tdesign-vue-next';
 import 'tdesign-vue-next/es/style/index.css';// 引入组件库的少量全局样式变量
 
+//
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 // 导入pinia
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)
 
@@ -26,3 +30,14 @@ app.use(pinia)
 app.use(TDesign)
 
 app.mount('#app')
+
+
+
+
+
+
+import { useVisitorStore } from "@/stores/visitor.js";
+const visitorStore = useVisitorStore()
+// 🚀 在应用启动时初始化 visitorId
+visitorStore.initVisitorID()
+console.log(visitorStore.visitorID)

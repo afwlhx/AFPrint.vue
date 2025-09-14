@@ -3,6 +3,9 @@ import { ref } from "vue";
 import { useWebStore } from "@/stores/web.js";
 import axios from "axios";
 
+// 是否双面打印
+const isDoublePrint = ref(false)
+
 const phoneNumber = ref();
 
 // 导入Pinia中webStore存储
@@ -25,13 +28,17 @@ async function Order() {
   }
 
   // axios请求获取后台链接
-  axios.post("http://localhost:5094/api/order",{
+  // http://localhost:5094/api/order
+  // https://print.afwlhx.top/api/order
+  axios.post("https://print.afwlhx.top/api/order",{
     fileName:webStore.uploadFileName,
     phoneNumber: phoneNumber.value,
-    cost:1.234
+    isDoublePrint:isDoublePrint.value,
+    cost:1.234,
   }).then(res => {
     alert("提交成功");
     console.log(res.data);
+    window.location.reload();
   })
   .catch(err => {
     console.error(err);
@@ -41,7 +48,9 @@ async function Order() {
 </script>
 
 <template>
-  下单手机：<t-input type="text" v-model="phoneNumber"/>
+  下单手机号：<t-input type="text" v-model="phoneNumber"/>
+  双面打印：<t-switch v-model="isDoublePrint"/>
+  <br>
   <t-button @click="Order()" class="order_button">下单</t-button>
 
   <template><t-alert message="这是一条信息" closeBtn /></template>
