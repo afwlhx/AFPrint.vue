@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref} from 'vue';
+import {ref} from 'vue';
 import axios from "axios";
 
 const phoneNumber = ref();
@@ -15,8 +15,8 @@ function GetOrder() {
 
   // axios 获取后端订单数据
   // http://localhost:5094/api/OrderSearch
-  // https://print.afwlhx.top/api/OrderSearch
-  axios.post(`https://print.afwlhx.top/api/OrderSearch?phoneNumber=${phoneNumber.value}`)
+  // https://printapi.afwlhx.top/api/OrderSearch
+  axios.post(`https://printapi.afwlhx.top/api/OrderSearch?phoneNumber=${phoneNumber.value}`)
         .then(res => {
           // 将后端获取的数据注入到ElementPlus表格中
           tableData.value = res.data;
@@ -31,8 +31,8 @@ let tableData = ref([]);
 
 
 const columns = ref([
-  // { colKey: 'id', title: 'ID', width: '100' },
-  { colKey: 'orderId', title: '订单编号' },
+  { colKey: 'id', title: 'ID', width: '100' },
+  // { colKey: 'orderId', title: '订单编号' },
   { colKey: 'orderStatus', title: '订单状态' },
   { colKey: 'phoneNumber', title: '电话号码'},
   {
@@ -42,29 +42,46 @@ const columns = ref([
   },
   // { colKey: 'isPay', title: '是否付款' },
   // { colKey: 'cost', title: '花费' },
-  { colKey: 'orderTime', title: '下单时间' },
+  // { colKey: 'orderTime', title: '下单时间' },
+  { colKey: 'address', title: '下单地址' },
+
   { colKey: 'fileName', title: '文件名' },
 ]);
 </script>
 
 <template>
-<h2>订单查询(手机号)</h2>
-  <t-input v-model="phoneNumber"/>
-  <t-button @click="GetOrder">查询</t-button>
+  <div class="order-search">
 
-  <t-table
-      bordered
-      size="small"
-      hover
-      stripe
-      row-key="index"
-      :data="tableData"
-      :columns="columns"
-  >
-  </t-table>
+    <h2>订单查询(手机号)</h2>
+
+    <t-input v-model="phoneNumber"/>
+
+    <t-button @click="GetOrder">查询</t-button>
+
+    <t-table
+        bordered
+        size="small"
+        hover
+        stripe
+
+        table-layout="auto"
+
+        :data="tableData"
+        :columns="columns"
+    >
+    </t-table>
+  </div>
 </template>
 
 <style scoped>
+.order-search {
+  display: flex;
+  flex-direction: column;
 
+  padding: 20px;
 
+  gap: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 </style>

@@ -23,14 +23,14 @@ function TUploadRes(res){
 
 const visitorStore = useVisitorStore();
 // http://localhost:5094/api/Upload
-// https://print.afwlhx.top/api/Upload
-const uploadRequestUrl = `https://print.afwlhx.top/api/Upload?visitorUUID=${visitorStore.visitorID}`
+// https://printapi.afwlhx.top/api/Upload
+const uploadRequestUrl = `https://printapi.afwlhx.top/api/Upload?visitorUUID=${visitorStore.visitorID}`
 </script>
 
 <template>
-  <div class="upload-container">
+  <div class="upload">
     <h2>上传文档</h2>
-<!--  上传  -->
+    <!--  上传  -->
     <t-upload theme="file"
               :action='uploadRequestUrl'
               :format-response="TUploadRes"/>
@@ -38,7 +38,14 @@ const uploadRequestUrl = `https://print.afwlhx.top/api/Upload?visitorUUID=${visi
 </template>
 
 <style scoped>
-  .upload-container {
-    margin-bottom: 20px;
+  .upload {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+
+    gap: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
   }
 </style>

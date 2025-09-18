@@ -6,7 +6,11 @@ import axios from "axios";
 // 是否双面打印
 const isDoublePrint = ref(false)
 
+// 电话号
 const phoneNumber = ref();
+
+// 收货地址
+const address = ref();
 
 // 导入Pinia中webStore存储
 const webStore = useWebStore();
@@ -27,12 +31,18 @@ async function Order() {
     return;
   }
 
+  if(address.value === undefined){
+    alert("请输入配送地址")
+    return;
+  }
+
   // axios请求获取后台链接
   // http://localhost:5094/api/order
-  // https://print.afwlhx.top/api/order
-  axios.post("https://print.afwlhx.top/api/order",{
+  // https://printapi.afwlhx.top/api/order
+  axios.post("https://printapi.afwlhx.top/api/order",{
     fileName:webStore.uploadFileName,
     phoneNumber: phoneNumber.value,
+    address: address.value,
     isDoublePrint:isDoublePrint.value,
     cost:1.234,
   }).then(res => {
@@ -48,16 +58,35 @@ async function Order() {
 </script>
 
 <template>
-  下单手机号：<t-input type="text" v-model="phoneNumber"/>
-  双面打印：<t-switch v-model="isDoublePrint"/>
-  <br>
-  <t-button @click="Order()" class="order_button">下单</t-button>
+  <div class="order">
 
-  <template><t-alert message="这是一条信息" closeBtn /></template>
+    <h2>下单</h2>
+
+    下单手机号：<t-input type="text" v-model="phoneNumber"/>
+
+    收货地址：<t-input type="text" v-model="address"/>
+
+    <div>
+      双面打印：<t-switch v-model="isDoublePrint"/>
+    </div>
+
+
+    <!-- 下单按钮 -->
+    <t-button @click="Order()">下单</t-button>
+  </div>
+
+
 </template>
 
 <style scoped>
-  .order_button{
-    margin-bottom: 40px;
+  .order {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+
+    gap: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
   }
 </style>

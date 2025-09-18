@@ -12,15 +12,19 @@ import OrderSearch from "@/components/OrderSearch.vue";
   </header>
 
   <main>
-    <t-space direction="vertical" size="medium">
-      <h1>欢迎光临蔚蓝幻想打印店！</h1>
-      <h3>请先根据单价表扫码付费后，再上传文件并下单，未付款将无法打印！</h3>
-      <t-link theme="primary" hover="color" size="large" href="/cost-table"> 打印单价表 </t-link>
-    </t-space>
+    <h1>欢迎光临蔚蓝幻想打印店！</h1>
+
+    <h2 class="QQGroup">官方QQ群：1063923684</h2>
+
+    <h3>请先根据单价表扫码付费后，再上传文件并下单，未付款将无法打印！</h3>
+
+    <t-link theme="primary" hover="color" size="large" href="/cost-table"> 点击查看打印单价表 </t-link>
 
     <UpLoad/>
     <Order/>
     <OrderSearch/>
+
+
 
     <h2>收款码:</h2>
     <img src="/images/PayQRCode/WeChatPay.png" alt="search" />
@@ -31,6 +35,12 @@ import OrderSearch from "@/components/OrderSearch.vue";
 
 <style scoped>
 main{
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
   margin: 60px;
 }
 
@@ -38,5 +48,21 @@ img{
   width: 100%;
 
   max-width: 200px;
+}
+
+.QQGroup{
+  color: red;
+}
+
+@media (max-width: 500px) {
+  main{
+    margin: 16px;
+  }
+}
+
+@media (min-width: 500px) {
+  main{
+    margin: 32px;
+  }
 }
 </style>
