@@ -17,6 +17,11 @@ const columns = ref([
     title: '是否双面打印',
     cell: (h,{ row }) => row.isDoublePrint ? '是' : '否',   // 👈 转换成字符串显示
   },
+  {
+    colKey: 'isColorPrint',
+    title: '是否彩色打印',
+    cell: (h,{ row }) => row.isDoublePrint ? '是' : '否',   // 👈 转换成字符串显示
+  },
   { colKey: 'isPay',
     title: '是否付款',
     cell: (h,{ row }) => row.isPay ? '是' : '否',

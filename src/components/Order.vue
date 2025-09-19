@@ -6,6 +6,9 @@ import axios from "axios";
 // 是否双面打印
 const isDoublePrint = ref(false)
 
+// 是否彩印
+const isColorPrint = ref(false)
+
 // 电话号
 const phoneNumber = ref();
 
@@ -32,8 +35,7 @@ async function Order() {
   }
 
   if(address.value === undefined){
-    alert("请输入配送地址")
-    return;
+    address.value = "自提"
   }
 
   // axios请求获取后台链接
@@ -44,6 +46,7 @@ async function Order() {
     phoneNumber: phoneNumber.value,
     address: address.value,
     isDoublePrint:isDoublePrint.value,
+    isColorPrint:isColorPrint.value,
     cost:1.234,
   }).then(res => {
     alert("提交成功");
@@ -64,7 +67,11 @@ async function Order() {
 
     下单手机号：<t-input type="text" v-model="phoneNumber"/>
 
-    收货地址：<t-input type="text" v-model="address"/>
+    收货地址：<t-input type="text" placeholder="请输入精确地址，自提则留空" v-model="address"/>
+
+    <div>
+      彩色打印：<t-switch v-model="isColorPrint"/>
+    </div>
 
     <div>
       双面打印：<t-switch v-model="isDoublePrint"/>
