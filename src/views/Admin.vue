@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import axios from "axios";
+import {Base64} from "js-base64";
 
 // 表格响应式数据
 let tableData = ref([])
@@ -8,63 +9,81 @@ let tableData = ref([])
 const key = ref();
 
 const columns = ref([
-  // { colKey: 'id', title: 'ID', width: '100' },
-  { colKey: 'orderId', title: '订单编号' },
-  { colKey: 'orderStatus', title: '订单状态' },
-  { colKey: 'phoneNumber', title: '电话号码'},
+  {colKey: 'id', title: 'ID'},
+  {colKey: 'orderId', title: '订单编号'},
+  {colKey: 'orderStatus', title: '订单状态'},
+  {colKey: 'phoneNumber', title: '电话号码'},
+  {colKey: 'printNumber', title: '打印份数'},
   {
     colKey: 'isDoublePrint',
     title: '是否双面打印',
-    cell: (h,{ row }) => row.isDoublePrint ? '是' : '否',   // 👈 转换成字符串显示
+    cell: (h, {row}) => row.isDoublePrint ? '是' : '否',   // 👈 转换成字符串显示
   },
   {
     colKey: 'isColorPrint',
     title: '是否彩色打印',
-    cell: (h,{ row }) => row.isDoublePrint ? '是' : '否',   // 👈 转换成字符串显示
+    cell: (h, {row}) => row.isColorPrint ? '是' : '否',   // 👈 转换成字符串显示
   },
-  { colKey: 'isPay',
+  {
+    colKey: 'isPay',
     title: '是否付款',
-    cell: (h,{ row }) => row.isPay ? '是' : '否',
+    cell: (h, {row}) => row.isPay ? '是' : '否',
   },
-  { colKey: 'cost', title: '花费' },
-  { colKey: 'orderTime', title: '下单时间' },
-  { colKey: 'address', title: '下单地址' },
-  { colKey: 'fileName', title: '文件名' },
+  {colKey: 'cost', title: '花费'},
+  {colKey: 'orderTime', title: '下单时间'},
+  {colKey: 'address', title: '下单地址'},
+  // {colKey: 'fileName', title: '文件名'},
   {
     colKey: 'fileName',
-    title: '下载',
-    cell: (h, { row }) => {
+    title: '文件',
+    cell: (h, {row}) => {
       return h(
           'a',
           {
-            href: `https://printapi.afwlhx.top/uploads/${row.fileName}`,
+            href: `${import.meta.env.VITE_API_DOWNLOAD_URL}/${row.fileName}`,
             target: '_blank',
             download: row.fileName, // 提示下载
           },
           row.fileName
       );
+    },
   },
+  {
+    colKey: 'orderStatus',
+    title: "预览",
+    cell: (h, {row}) => {
+      // let url = `${import.meta.env.VITE_API_DOWNLOAD_URL}/${row.fileName}`; //要预览文件的访问地址
+      let url = `https://printapi.afwlhx.top/uploads/${row.fileName}`; //要预览文件的访问地址
+
+      return h(
+          'a',
+          {
+            href: 'https://docview.afwlhx.top/onlinePreview?url='+encodeURIComponent(Base64.encode(url)),
+            target: '_blank',
+          },
+          "预览"
+      )
+    }
+
   }
 ]);
 
 function StartSearch() {
-  if(key.value === undefined) {
+  if (key.value === undefined) {
     alert("key不能为空")
     return;
   }
-axios.post(`https://printapi.afwlhx.top/api/SearchAll?key=${key.value}`)
-  .then(res => {
-    tableData.value = res.data;
-  })
-  .catch(err => {
-    console.log(err)
-    if(err.response.data === "key不正确")
-    {
-      alert("key不正确！");
-    }
-  });
+  axios.post(`${import.meta.env.VITE_API_BASE_URL}/SearchAll?key=${key.value}`)
+      .then(res => {
+        tableData.value = res.data;
+      })
+      .catch(err => {
+        console.log(err)
+        if (err.response.data === "key不正确") {
+          alert("key不正确！");
+        }
+      });
 }
-
 
 
 </script>
@@ -73,7 +92,7 @@ axios.post(`https://printapi.afwlhx.top/api/SearchAll?key=${key.value}`)
   <div class="container">
     <t-space direction="vertical" size="medium">
       <h1>后台管理</h1>
-      <t-input placeholder="key" v-model:value="key" type="password" />
+      <t-input placeholder="key" v-model:value="key" type="password"/>
       <t-button @click="StartSearch">检索</t-button>
 
       <t-table
@@ -81,7 +100,9 @@ axios.post(`https://printapi.afwlhx.top/api/SearchAll?key=${key.value}`)
           size="small"
           hover
           stripe
-          row-key="index"
+
+          table-layout="auto"
+
           :data="tableData"
           :columns="columns"
       />

@@ -1,4 +1,4 @@
-import {createRouter , createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
@@ -11,11 +11,11 @@ const routes = [
     },
     {
         path: '/admin',
-        component:()=>import('@/views/Admin.vue')
+        component: () => import('@/views/Admin.vue')
     },
     {
         path: '/cost-table',
-        component:()=>import('@/views/CostTable.vue'),
+        component: () => import('@/views/CostTable.vue'),
     }
 ]
 

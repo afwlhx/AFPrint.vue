@@ -1,14 +1,14 @@
 <script setup>
-import { useWebStore } from "@/stores/web.js";
-import { useVisitorStore } from "@/stores/visitor.js";
+import {useWebStore} from "@/stores/web.js";
+import {useVisitorStore} from "@/stores/visitor.js";
 
-function TUploadRes(res){
+function TUploadRes(res) {
 
   // 判断是否冷却30秒完成
-  if (res.XMLHttpRequest.status === 400){
+  if (res.XMLHttpRequest.status === 400) {
     alert("请等待30秒后再上传！");
-    return{
-      error:res.error,
+    return {
+      error: res.error,
     }
   }
 
@@ -18,13 +18,12 @@ function TUploadRes(res){
   webStore.SetUploadFileName(res.fileName)
   console.log(webStore.uploadFileName)
 
-  return{}
+  return {}
 }
 
 const visitorStore = useVisitorStore();
-// http://localhost:5094/api/Upload
-// https://printapi.afwlhx.top/api/Upload
-const uploadRequestUrl = `https://printapi.afwlhx.top/api/Upload?visitorUUID=${visitorStore.visitorID}`
+
+const uploadRequestUrl = `${import.meta.env.VITE_API_BASE_URL}/Upload?visitorUUID=${visitorStore.visitorID}`
 </script>
 
 <template>
@@ -38,14 +37,14 @@ const uploadRequestUrl = `https://printapi.afwlhx.top/api/Upload?visitorUUID=${v
 </template>
 
 <style scoped>
-  .upload {
-    display: flex;
-    flex-direction: column;
+.upload {
+  display: flex;
+  flex-direction: column;
 
-    padding: 20px;
+  padding: 20px;
 
-    gap: 16px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
+  gap: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 </style>

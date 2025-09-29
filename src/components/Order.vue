@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from "vue";
-import { useWebStore } from "@/stores/web.js";
+import {ref} from "vue";
+import {useWebStore} from "@/stores/web.js";
 import axios from "axios";
 
 // 是否双面打印
@@ -15,6 +15,9 @@ const phoneNumber = ref();
 // 收货地址
 const address = ref();
 
+// 打印份数
+const printNumber = ref(1);
+
 // 导入Pinia中webStore存储
 const webStore = useWebStore();
 
@@ -22,41 +25,47 @@ const webStore = useWebStore();
 // 下单按钮事件函数
 async function Order() {
   // 判断文件名是否为空
-  if (webStore.uploadFileName === undefined){
+  if (webStore.uploadFileName === undefined) {
     alert("请上传文件")
     return;
   }
 
   // 电话号码判断 正则表达式
   const phoneReg = /^1[3456789]\d{9}$/;
-  if (!phoneReg.test(phoneNumber.value)){
+  if (!phoneReg.test(phoneNumber.value)) {
     alert("请输入正确的手机号")
     return;
   }
 
-  if(address.value === undefined){
+// 正则表达式匹配纯数字
+  const numbersReg = /^[0-9]*$/
+  if (!numbersReg.test(printNumber.value)) {
+    alert("请输入份数")
+    return;
+  }
+
+  if (address.value === undefined) {
     address.value = "自提"
   }
 
   // axios请求获取后台链接
-  // http://localhost:5094/api/order
-  // https://printapi.afwlhx.top/api/order
-  axios.post("https://printapi.afwlhx.top/api/order",{
-    fileName:webStore.uploadFileName,
+  axios.post(`${import.meta.env.VITE_API_BASE_URL}/order`, {
+    fileName: webStore.uploadFileName,
     phoneNumber: phoneNumber.value,
     address: address.value,
-    isDoublePrint:isDoublePrint.value,
-    isColorPrint:isColorPrint.value,
-    cost:1.234,
+    isDoublePrint: isDoublePrint.value,
+    isColorPrint: isColorPrint.value,
+    printNumber: printNumber.value,
+    cost: 1.234,
   }).then(res => {
     alert("提交成功");
     console.log(res.data);
     window.location.reload();
   })
-  .catch(err => {
-    console.error(err);
-    alert("提交失败");
-  })
+      .catch(err => {
+        console.error(err);
+        alert("提交失败");
+      })
 }
 </script>
 
@@ -65,16 +74,23 @@ async function Order() {
 
     <h2>下单</h2>
 
-    下单手机号：<t-input type="text" v-model="phoneNumber"/>
+    打印份数：
+    <t-input type="text" v-model="printNumber"/>
 
-    收货地址：<t-input type="text" placeholder="请输入精确地址，自提则留空" v-model="address"/>
+    下单手机号：
+    <t-input type="text" v-model="phoneNumber"/>
+
+    收货地址：
+    <t-input type="text" placeholder="请输入精确地址，自提则留空" v-model="address"/>
 
     <div>
-      彩色打印：<t-switch v-model="isColorPrint"/>
+      彩色打印：
+      <t-switch v-model="isColorPrint"/>
     </div>
 
     <div>
-      双面打印：<t-switch v-model="isDoublePrint"/>
+      双面打印：
+      <t-switch v-model="isDoublePrint"/>
     </div>
 
 
@@ -86,14 +102,14 @@ async function Order() {
 </template>
 
 <style scoped>
-  .order {
-    display: flex;
-    flex-direction: column;
+.order {
+  display: flex;
+  flex-direction: column;
 
-    padding: 20px;
+  padding: 20px;
 
-    gap: 16px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
+  gap: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 </style>

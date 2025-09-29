@@ -31,11 +31,11 @@
 </template>
 
 <style scoped>
-  div{
-    margin: 30px;
-  }
+div {
+  margin: 30px;
+}
 
-  .QQGroup{
-    color: red;
-  }
+.QQGroup {
+  color: red;
+}
 </style>

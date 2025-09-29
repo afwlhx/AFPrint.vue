@@ -4,18 +4,19 @@ import {v4 as uuidv4} from 'uuid';
 
 // 本地存储
 export const useVisitorStore = defineStore('visitor', () => {
-    // 用户ID
-    const visitorID = ref()
-    function initVisitorID() {
-        if (!visitorID.value) {
-            visitorID.value = uuidv4()
-        }
-    }
+        // 用户ID
+        const visitorID = ref()
 
-    return {
-        visitorID,
-        initVisitorID,
-    }
+        function initVisitorID() {
+            if (!visitorID.value) {
+                visitorID.value = uuidv4()
+            }
+        }
+
+        return {
+            visitorID,
+            initVisitorID,
+        }
 
     },
     {
