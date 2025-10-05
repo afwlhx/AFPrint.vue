@@ -16,7 +16,11 @@ const routes = [
     {
         path: '/cost-table',
         component: () => import('@/views/CostTable.vue'),
-    }
+    },
+    {
+        path: '/blog',
+        component: () => import('@/views/Blog.vue'),
+    },
 ]
 
 const router = createRouter({
