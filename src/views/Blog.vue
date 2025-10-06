@@ -6,7 +6,7 @@ const key = ref("");
 
 // 动态生成上传地址
 const uploadRequestUrl = computed(() =>
-    `https://blog.afwlhx.top/api/Upload?key=${encodeURIComponent(key.value)}`
+    `https://www.afwlhx.top/api/Upload?key=${encodeURIComponent(key.value)}`
 );
 
 // 上传前验证
