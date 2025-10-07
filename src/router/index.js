@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
     {
         path: '/',
-        component: () => import('@/views/Index.vue'),
+        component: () => import('@/views/Order.vue'),
     },
     {
         path: '/login',
@@ -21,6 +21,10 @@ const routes = [
         path: '/blog',
         component: () => import('@/views/Blog.vue'),
     },
+    {
+        path: '/order-search',
+        component: () => import('@/views/OrderSearch.vue'),
+    }
 ]
 
 const router = createRouter({

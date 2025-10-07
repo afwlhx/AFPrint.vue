@@ -1,12 +1,13 @@
 <script setup>
 import {useWebStore} from "@/stores/web.js";
 import {useVisitorStore} from "@/stores/visitor.js";
+import {MessagePlugin} from "tdesign-vue-next";
 
 function TUploadRes(res) {
 
   // 判断是否冷却30秒完成
   if (res.XMLHttpRequest.status === 400) {
-    alert("请等待30秒后再上传！");
+    MessagePlugin.error("请等待30秒后再上传！")
     return {
       error: res.error,
     }
@@ -27,8 +28,8 @@ const uploadRequestUrl = `${import.meta.env.VITE_API_BASE_URL}/Upload?visitorUUI
 </script>
 
 <template>
-  <div class="upload">
-    <h2>上传文档</h2>
+  <div>
+    <label>上传文档：</label>
     <!--  上传  -->
     <t-upload theme="file"
               :action='uploadRequestUrl'
@@ -37,14 +38,4 @@ const uploadRequestUrl = `${import.meta.env.VITE_API_BASE_URL}/Upload?visitorUUI
 </template>
 
 <style scoped>
-.upload {
-  display: flex;
-  flex-direction: column;
-
-  padding: 20px;
-
-  gap: 16px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-}
 </style>

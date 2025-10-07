@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import axios from "axios";
 import {Base64} from "js-base64";
+import {MessagePlugin} from "tdesign-vue-next";
 
 // 表格响应式数据
 let tableData = ref([])
@@ -58,7 +59,7 @@ const columns = ref([
       return h(
           'a',
           {
-            href: 'https://docview.afwlhx.top/onlinePreview?url='+encodeURIComponent(Base64.encode(url)),
+            href: 'https://docview.afwlhx.top/onlinePreview?url=' + encodeURIComponent(Base64.encode(url)),
             target: '_blank',
           },
           "预览"
@@ -70,7 +71,7 @@ const columns = ref([
 
 function StartSearch() {
   if (key.value === undefined) {
-    alert("key不能为空")
+    MessagePlugin.error("key不能为空")
     return;
   }
   axios.post(`${import.meta.env.VITE_API_BASE_URL}/SearchAll?key=${key.value}`)
@@ -80,7 +81,7 @@ function StartSearch() {
       .catch(err => {
         console.log(err)
         if (err.response.data === "key不正确") {
-          alert("key不正确！");
+          MessagePlugin.error("key不正确")
         }
       });
 }
@@ -89,32 +90,21 @@ function StartSearch() {
 </script>
 
 <template>
-  <div class="container">
-    <t-space direction="vertical" size="medium">
-      <h1>后台管理</h1>
-      <t-input placeholder="key" v-model:value="key" type="password"/>
-      <t-button @click="StartSearch">检索</t-button>
+  <h1>后台管理</h1>
 
-      <t-table
-          bordered
-          size="small"
-          hover
-          stripe
+  <t-input placeholder="key" v-model:value="key" type="password" size="large"/>
+  <t-button @click="StartSearch" size="large">检索</t-button>
 
-          table-layout="auto"
-
-          :data="tableData"
-          :columns="columns"
-      />
-    </t-space>
-  </div>
-
-
+  <t-table
+      bordered
+      size="small"
+      hover
+      stripe
+      table-layout="auto"
+      :data="tableData"
+      :columns="columns"
+  />
 </template>
 
 <style scoped>
-.container {
-  margin: 50px;
-}
-
 </style>

@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from "vue";
-import { MessagePlugin } from "tdesign-vue-next";
+import {ref, computed} from "vue";
+import {MessagePlugin} from "tdesign-vue-next";
 
 const key = ref("");
 
@@ -24,20 +24,18 @@ function TUploadRes(res) {
   if (res.XMLHttpRequest.status === 200) {
     MessagePlugin.success(res.message);
     return true;
-  }
-  else return false;
+  } else return false;
 }
 </script>
 
 <template>
-  <div class="container">
-    <t-input
-        placeholder="请输入 key"
-        v-model:value="key"
-        type="password"
-        class="mb-2"
-    />
+  <t-input
+      placeholder="请输入 key"
+      v-model:value="key"
+      type="password"
+  />
 
+  <div>
     <t-upload
         theme="file"
         draggable
@@ -49,11 +47,9 @@ function TUploadRes(res) {
 </template>
 
 <style scoped>
-.mb-2 {
-  margin-bottom: 20px;
-}
-
-.container {
-  margin: 40px;
+div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>

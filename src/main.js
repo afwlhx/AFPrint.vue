@@ -10,9 +10,9 @@ import router from '@/router'
 
 // 导入 TDesign
 import TDesign from 'tdesign-vue-next';
-import 'tdesign-vue-next/es/style/index.css';// 引入组件库的少量全局样式变量
+import '@/assets/theme/tdesign-main.css';// 引入组件库的少量全局样式变量
 
-//
+// 持久化存储
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 // 导入pinia

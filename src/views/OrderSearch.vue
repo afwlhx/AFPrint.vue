@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue';
 import axios from "axios";
+import {MessagePlugin} from "tdesign-vue-next";
 
 const phoneNumber = ref();
 
@@ -9,7 +10,7 @@ function GetOrder() {
   // 判断手机号合法性
   const phoneReg = /^1[3456789]\d{9}$/;
   if (!phoneReg.test(phoneNumber.value)) {
-    alert("请输入正确的手机号")
+    MessagePlugin.error("请输入正确的手机号")
     return;
   }
 
@@ -54,38 +55,22 @@ const columns = ref([
 </script>
 
 <template>
-  <div class="order-search">
+  <h1>订单查询(手机号)</h1>
 
-    <h2>订单查询(手机号)</h2>
+  <t-input v-model="phoneNumber" size="large"/>
 
-    <t-input v-model="phoneNumber"/>
+  <t-button @click="GetOrder" size="large">查询</t-button>
 
-    <t-button @click="GetOrder">查询</t-button>
-
-    <t-table
-        bordered
-        size="small"
-        hover
-        stripe
-
-        table-layout="auto"
-
-        :data="tableData"
-        :columns="columns"
-    >
-    </t-table>
-  </div>
+  <t-table
+      bordered
+      size="small"
+      hover
+      stripe
+      table-layout="auto"
+      :data="tableData"
+      :columns="columns"
+  />
 </template>
 
 <style scoped>
-.order-search {
-  display: flex;
-  flex-direction: column;
-
-  padding: 20px;
-
-  gap: 16px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-}
 </style>

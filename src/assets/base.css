@@ -1,8 +1,4 @@
-/* color palette from <https://github.com/vuejs/theme> */
-:root {
-}
 
-/* semantic color variables for this project */
 :root {
 }
 
@@ -17,10 +13,27 @@
     box-sizing: border-box;
 }
 
+/* ====== 全局样式 ====== */
 body {
-    height: 100vh;
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #cce5ff, #e8f4ff);
+    margin: 0;
+    padding: 0;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+/* 全局去除 <a> 标签默认样式 */
+a {
+    text-decoration: none; /* 去掉下划线 */
+    color: inherit;        /* 继承父元素的颜色 */
+}
+
+
 #app {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 页面最小高度占满整个视口 */
 }
