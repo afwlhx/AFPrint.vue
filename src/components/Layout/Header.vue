@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <li><a href="/">下单</a></li>
       <li><a href="/cost-table">价格</a></li>
       <li><a href="/order-search">订单查询</a></li>
+      <li><a href="/profile">我的</a></li>
       <li><a href="/admin">后台管理</a></li>
     </ul>
   </nav>
@@ -92,7 +93,7 @@ nav ul li a:hover {
     width: 94px;
     position: absolute;
     top: 60px;
-    right: 0;
+    right: 4px;
 
     background: #007BFF;
     border-radius: 10px;

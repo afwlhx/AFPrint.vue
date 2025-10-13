@@ -1,9 +1,10 @@
 <script setup>
-import {ref} from "vue";
+import {ref,onMounted} from "vue";
 import Upload from "@/components/Order/Upload.vue";
 import {useWebStore} from "@/stores/web.js";
 import axios from "axios";
 import {MessagePlugin} from "tdesign-vue-next";
+import http,{ clearToken } from '@/api/http.js'
 
 // 是否双面打印
 let isDoublePrint = ref(false)
@@ -51,7 +52,7 @@ async function Order() {
   }
 
   // axios请求获取后台链接
-  axios.post(`${import.meta.env.VITE_API_BASE_URL}/order`, {
+  http.post(`/order`, {
     fileName: webStore.uploadFileName,
     phoneNumber: phoneNumber.value,
     address: address.value,
@@ -80,6 +81,20 @@ async function Order() {
         MessagePlugin.error("提交失败")
       })
 }
+
+// 生命周期函数 当打开页面时
+onMounted(async () => {
+    http.get('/Auth/user-status')
+    .then(res => {
+
+      MessagePlugin.success("已登录！")
+    })
+    .catch(err => {
+      alert('未授权，请重新登录')
+      clearToken()
+      location.href = '/login'
+    })
+})
 </script>
 
 <template>

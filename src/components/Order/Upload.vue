@@ -16,7 +16,7 @@ function TUploadRes(res) {
   console.log(res)
   // 将文件名传嗲到pinia状态管理中的webStore
   const webStore = useWebStore();
-  webStore.SetUploadFileName(res.fileName)
+  webStore.uploadFileName = res.fileName;
   console.log(webStore.uploadFileName)
 
   return {}

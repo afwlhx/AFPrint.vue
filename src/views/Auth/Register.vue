@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup>
 
 </script>
 
 <template>
-  <h1>This is Login Page!</h1>
+<h1>注册</h1>
 </template>
 
 <style scoped>

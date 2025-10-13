@@ -10,10 +10,11 @@ import router from '@/router'
 
 // 导入 TDesign
 import TDesign from 'tdesign-vue-next';
-import '@/assets/theme/tdesign-main.css';// 引入组件库的少量全局样式变量
-
+import '@/assets/theme/tdesign-main.css'; // 引入组件库的少量全局样式变量
 // 持久化存储
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import {useAuthStore} from '@/stores/auth.js'
+import {useVisitorStore} from "@/stores/visitor.js";
 
 // 导入pinia
 const pinia = createPinia()
@@ -21,18 +22,23 @@ pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)
 
-// 将vue-router的实例注入到vue应用中
-app.use(router)
-
 // 将Pinia的实例注入到vue应用中
 app.use(pinia)
+
+// 将vue-router的实例注入到vue应用中
+app.use(router)
 
 app.use(TDesign)
 
 app.mount('#app')
 
+const authStore = useAuthStore()
 
-import {useVisitorStore} from "@/stores/visitor.js";
+// 路由守卫：检查JWT
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !authStore.accessToken) next('/login')
+    else next()
+})
 
 const visitorStore = useVisitorStore()
 // 🚀 在应用启动时初始化 visitorId

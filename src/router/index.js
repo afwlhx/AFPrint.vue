@@ -4,10 +4,7 @@ const routes = [
     {
         path: '/',
         component: () => import('@/views/Order.vue'),
-    },
-    {
-        path: '/login',
-        component: () => import('@/views/Login.vue'),
+        meta: { requiresAuth: true },
     },
     {
         path: '/admin',
@@ -24,7 +21,24 @@ const routes = [
     {
         path: '/order-search',
         component: () => import('@/views/OrderSearch.vue'),
-    }
+    },
+    {
+        path: '/login',
+        component:() => import('@/views/Auth/Login.vue'),
+    },
+    {
+        path: '/register',
+        component:() => import('@/views/Auth/Register.vue'),
+    },
+    {
+        path: '/user-info',
+        component:() => import('@/views/Auth/UserInfo.vue'),
+    },
+    {
+        path: '/profile',
+        component:()=> import('@/views/Profile.vue'),
+        meta: {requiresAuth: true},
+    },
 ]
 
 const router = createRouter({

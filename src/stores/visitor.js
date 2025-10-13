@@ -17,7 +17,6 @@ export const useVisitorStore = defineStore('visitor', () => {
             visitorID,
             initVisitorID,
         }
-
     },
     {
         // pinia持久化存储 ( 本地存储 )
