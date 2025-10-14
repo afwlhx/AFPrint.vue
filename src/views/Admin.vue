@@ -1,14 +1,17 @@
 <script setup>
-import {ref} from "vue";
+import {ref,onMounted} from "vue";
 import axios from "axios";
 import {Base64} from "js-base64";
 import {MessagePlugin} from "tdesign-vue-next";
+import http,{clearToken} from '@/api/http.js'
 
 // 表格响应式数据
 let tableData = ref([])
 
+// key响应式变量
 const key = ref();
 
+// 表格字段定义
 const columns = ref([
   {colKey: 'id', title: 'ID'},
   {colKey: 'orderId', title: '订单编号'},
@@ -69,31 +72,47 @@ const columns = ref([
   }
 ]);
 
-function StartSearch() {
-  if (key.value === undefined) {
-    MessagePlugin.error("key不能为空")
-    return;
-  }
-  axios.post(`${import.meta.env.VITE_API_BASE_URL}/SearchAll?key=${key.value}`)
+// function StartSearch() {
+//   if (key.value === undefined) {
+//     MessagePlugin.error("key不能为空")
+//     return;
+//   }
+//   axios.post(`${import.meta.env.VITE_API_BASE_URL}/SearchAll?key=${key.value}`)
+//       .then(res => {
+//         tableData.value = res.data;
+//       })
+//       .catch(err => {
+//         console.log(err)
+//         if (err.response.data === "key不正确") {
+//           MessagePlugin.error("key不正确")
+//         }
+//       });
+// }
+
+// 生命周期函数 当打开页面时
+onMounted(async () => {
+  http.post('/SearchAll')
       .then(res => {
-        tableData.value = res.data;
+        MessagePlugin.success("已登录！")
+        console.log(res)
+        // profile.value = res.data
+
+        tableData.value = res.data
       })
       .catch(err => {
-        console.log(err)
-        if (err.response.data === "key不正确") {
-          MessagePlugin.error("key不正确")
-        }
-      });
-}
-
+        alert('请使用管理员账户重新登录！')
+        // clearToken()
+        location.href = '/profile'
+      })
+})
 
 </script>
 
 <template>
   <h1>后台管理</h1>
 
-  <t-input placeholder="key" v-model:value="key" type="password" size="large"/>
-  <t-button @click="StartSearch" size="large">检索</t-button>
+<!--  <t-input placeholder="key" v-model:value="key" type="password" size="large"/>-->
+<!--  <t-button @click="StartSearch" size="large">检索</t-button>-->
 
   <t-table
       bordered

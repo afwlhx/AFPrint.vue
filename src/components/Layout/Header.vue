@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     <ul id="nav-links">
       <li><a href="/">下单</a></li>
       <li><a href="/cost-table">价格</a></li>
-      <li><a href="/order-search">订单查询</a></li>
+<!--      <li><a href="/order-search">订单查询</a></li>-->
+      <li><a href="/register">注册</a></li>
       <li><a href="/profile">我的</a></li>
       <li><a href="/admin">后台管理</a></li>
     </ul>

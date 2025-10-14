@@ -36,7 +36,10 @@ const authStore = useAuthStore()
 
 // 路由守卫：检查JWT
 router.beforeEach((to, from, next) => {
+    // 判断标签为 requireAuth 且没有 token 的
     if (to.meta.requiresAuth && !authStore.accessToken) next('/login')
+    // 判断标签为 dontRequireAuth 且有 token 的
+    else if(to.meta.dontRequiresAuth && authStore.accessToken) next('/profile')
     else next()
 })
 
