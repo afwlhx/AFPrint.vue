@@ -67,7 +67,7 @@ async function register() {
     <t-input type="password" v-model="password" size="large" placeholder="请输入密码"/>
   </div>
 
-  <t-button @click="register" size="large">登录</t-button></template>
+  <t-button @click="register" size="large">注册</t-button></template>
 
 <style scoped>
 

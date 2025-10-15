@@ -2,7 +2,6 @@
 import {ref,onMounted} from "vue";
 import Upload from "@/components/Order/Upload.vue";
 import {useWebStore} from "@/stores/web.js";
-import axios from "axios";
 import {MessagePlugin} from "tdesign-vue-next";
 import http,{ clearToken } from '@/api/http.js'
 
@@ -11,9 +10,6 @@ let isDoublePrint = ref(false)
 
 // 是否彩印
 let isColorPrint = ref(false)
-
-// 电话号
-let phoneNumber = ref();
 
 // 收货地址
 let address = ref();
@@ -34,11 +30,11 @@ async function Order() {
   }
 
   // 电话号码判断 正则表达式
-  const phoneReg = /^1[3456789]\d{9}$/;
-  if (!phoneReg.test(phoneNumber.value)) {
-    await MessagePlugin.error("请输入正确的手机号")
-    return;
-  }
+  // const phoneReg = /^1[3456789]\d{9}$/;
+  // if (!phoneReg.test(phoneNumber.value)) {
+  //   await MessagePlugin.error("请输入正确的手机号")
+  //   return;
+  // }
 
 // 正则表达式匹配纯数字
   const numbersReg = /^[0-9]*$/
@@ -54,7 +50,6 @@ async function Order() {
   // axios请求获取后台链接
   http.post(`/order`, {
     fileName: webStore.uploadFileName,
-    phoneNumber: phoneNumber.value,
     address: address.value,
     isDoublePrint: isDoublePrint.value,
     isColorPrint: isColorPrint.value,
@@ -68,8 +63,6 @@ async function Order() {
     isDoublePrint.value = false
 
     isColorPrint.value = false
-
-    phoneNumber.value = ""
 
     address.value = ""
 
@@ -104,11 +97,6 @@ onMounted(async () => {
   <div>
     <label>打印份数：</label>
     <t-input type="text" size="large" v-model="printNumber"/>
-  </div>
-
-  <div>
-    <label class="input-label">下单手机号：</label>
-    <t-input type="text" size="large" v-model="phoneNumber"/>
   </div>
 
   <div>

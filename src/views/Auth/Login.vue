@@ -11,6 +11,12 @@ const password = ref('');
 const authStore = useAuthStore();
 
 async function login() {
+  if (!username.value || !password.value)
+  {
+    await MessagePlugin.error("请输入账号或密码")
+    return
+  }
+
   http.post("/Auth/login", {
     username: username.value,
     password: password.value
@@ -23,7 +29,14 @@ async function login() {
     location.href = '/profile'
   }).catch((err) => {
     MessagePlugin.error("登录失败");
+
+    username.value = "";
+    password.value = "";
   })
+}
+
+async function register() {
+  location.href = '/register'
 }
 </script>
 
@@ -40,9 +53,23 @@ async function login() {
     <t-input type="password" v-model="password" size="large" placeholder="请输入密码"/>
   </div>
 
-  <t-button @click="login" size="large">登录</t-button>
+  <div class="buttons-container">
+    <t-button @click="login" size="large" class="button">登录</t-button>
+    <t-button @click="register" size="large" block variant="outline" class="button">前往注册</t-button>
+  </div>
+
+
 </template>
 
 <style scoped>
+.buttons-container {
+  display: flex;
+  flex-direction: row;
 
+  justify-content: space-between;
+}
+
+.button{
+  width: 48%;
+}
 </style>
